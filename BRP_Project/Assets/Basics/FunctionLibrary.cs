@@ -34,6 +34,13 @@ namespace Basics
             return functions[(int)name];
         }
 
+        public static Vector3 Morph(
+            float u, float v, float t, Function from, Function to, float progress
+        )
+        {
+            return Vector3.LerpUnclamped(from(u, v, t), to(u, v, t), SmoothStep(0f, 1f, progress));
+        }
+
         public static Vector3 Wave(float u, float v, float t)
         {
             Vector3 p;
