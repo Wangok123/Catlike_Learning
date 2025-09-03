@@ -790,6 +790,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1546998058}
   - component: {fileID: 1546998057}
+  - component: {fileID: 1546998059}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -804,7 +805,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546998056}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 351aec40ca67c4848b08c14b6daddf79, type: 3}
   m_Name: 
@@ -830,6 +831,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1546998059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546998056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef901aa75c224279874fd1ec8ae060a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolution: 10
+  function: 0
+  computeShader: {fileID: 7200000, guid: 6946d2f61f2cdc14989d73750892c263, type: 3}
+  material: {fileID: 2100000, guid: cb5324eff70306547adcc20c0bc6a976, type: 2}
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  transitionMode: 0
+  functionDuration: 1
+  transitionDuration: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
