@@ -63,6 +63,17 @@ namespace Basics.Jobs.Scripts
             for (int i = 0; i < matricesBuffers.Length; i++) {
                 matricesBuffers[i].Release();
             }
+            
+            parts = null;
+            matrices = null;
+            matricesBuffers = null;
+        }
+        
+        void OnValidate () {
+            if (parts != null && enabled) {
+                OnDisable();
+                OnEnable();
+            }
         }
 
         FractalPart  CreatePart (int childIndex)  => new FractalPart {
@@ -104,6 +115,10 @@ namespace Basics.Jobs.Scripts
                         part.worldPosition, part.worldRotation, scale * Vector3.one
                     );
                 }
+            }
+            
+            for (int i = 0; i < matricesBuffers.Length; i++) {
+                matricesBuffers[i].SetData(matrices[i]);
             }
         }
     }
