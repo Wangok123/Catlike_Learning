@@ -33,12 +33,19 @@ namespace Basics.Jobs.Scripts
         FractalPart[][] parts;
         Matrix4x4[][] matrices;
         
-        void Awake () {
+        ComputeBuffer[] matricesBuffers;
+        
+        void OnEnable () {
             parts = new FractalPart[depth][];
             matrices = new Matrix4x4[depth][];
+            
+            matricesBuffers = new ComputeBuffer[depth];
+            int stride = 16 * 4;
+            
             for (int i = 0, length = 1; i < parts.Length; i++, length *= 5) {
                 parts[i] = new FractalPart[length];
                 matrices[i] = new Matrix4x4[length];
+                matricesBuffers[i] = new ComputeBuffer(length, stride);
             }
             
             parts[0][0] = CreatePart(0);
@@ -49,6 +56,12 @@ namespace Basics.Jobs.Scripts
                         levelParts[fpi + ci] = CreatePart(ci);
                     }
                 }
+            }
+        }
+        
+        void OnDisable () {
+            for (int i = 0; i < matricesBuffers.Length; i++) {
+                matricesBuffers[i].Release();
             }
         }
 
