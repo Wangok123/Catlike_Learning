@@ -24,7 +24,7 @@ namespace Creating_a_Mesh.Scripts
             Mesh.MeshDataArray meshDataArray = Mesh.AllocateWritableMeshData(1);
             Mesh.MeshData meshData = meshDataArray[0];
 
-            MeshJob<SquareGrid, SingleStream>.ScheduleParallel(
+            MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh,
                 meshData, default
             ).Complete();
 

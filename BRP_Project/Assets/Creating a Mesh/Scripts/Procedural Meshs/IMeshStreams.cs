@@ -13,7 +13,7 @@ namespace ProceduralMeshes
         /// <param name="vertexCount"></param>
         /// <param name="indexCount"></param>
         void Setup(
-            Mesh.MeshData meshData, int vertexCount, int indexCount
+            Mesh.MeshData meshData, Bounds bounds, int vertexCount, int indexCount
         );
 
         /// <summary>

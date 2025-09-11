@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
@@ -10,7 +8,7 @@ using UnityEngine.Rendering;
 
 namespace ProceduralMeshes.Streams
 {
-    public struct SingleStream : IMeshStreams
+    public struct MultiStream: IMeshStreams
     {
         [StructLayout(LayoutKind.Sequential)]
         struct Stream0 {

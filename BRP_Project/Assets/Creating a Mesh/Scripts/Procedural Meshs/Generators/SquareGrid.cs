@@ -1,4 +1,5 @@
-﻿using static Unity.Mathematics.math;
+﻿using UnityEngine;
+using static Unity.Mathematics.math;
 
 namespace ProceduralMeshes.Generators
 {
@@ -9,6 +10,8 @@ namespace ProceduralMeshes.Generators
         public int IndexCount => 6;
 
         public int JobLength => 1;
+        
+        public Bounds Bounds => new Bounds(new Vector3(0.5f, 0.5f), new Vector3(1f, 1f));
 
         public void Execute<S>(int i, S streams) where S : struct, IMeshStreams
         {
