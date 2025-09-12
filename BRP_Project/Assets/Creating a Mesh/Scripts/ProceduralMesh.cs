@@ -9,13 +9,16 @@ namespace Creating_a_Mesh.Scripts
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class ProceduralMesh : MonoBehaviour
     {
+        [SerializeField, Range(1, 10)]
+        int resolution = 1;
+        
         Mesh mesh;
 
         void Awake () {
             mesh = new Mesh {
                 name = "Procedural Mesh"
             };
-            GenerateMesh();
+            // GenerateMesh();
             GetComponent<MeshFilter>().mesh = mesh;
         }
 
@@ -24,11 +27,21 @@ namespace Creating_a_Mesh.Scripts
             Mesh.MeshDataArray meshDataArray = Mesh.AllocateWritableMeshData(1);
             Mesh.MeshData meshData = meshDataArray[0];
 
-            MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh,
-                meshData, default
+            // MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh,
+            //     meshData, default
+            // ).Complete();
+            MeshJob<SquareGrid, MultiStream>.ScheduleParallel(mesh,
+                meshData, resolution ,default
             ).Complete();
 
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
+        }
+        
+        void OnValidate () => enabled = true;
+
+        void Update () {
+            GenerateMesh();
+            enabled = false;
         }
     }
 }
