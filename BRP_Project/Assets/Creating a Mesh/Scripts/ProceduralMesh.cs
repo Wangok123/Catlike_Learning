@@ -9,6 +9,18 @@ namespace Creating_a_Mesh.Scripts
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class ProceduralMesh : MonoBehaviour
     {
+        static MeshJobScheduleDelegate[] jobs = {
+            MeshJob<SquareGrid, SingleStream>.ScheduleParallel,
+            MeshJob<SharedSquareGrid, SingleStream>.ScheduleParallel
+        };
+
+        public enum MeshType {
+            SquareGrid, SharedSquareGrid
+        };
+
+        [SerializeField]
+        MeshType meshType;
+        
         [SerializeField, Range(1, 10)]
         int resolution = 1;
         
@@ -30,9 +42,10 @@ namespace Creating_a_Mesh.Scripts
             // MeshJob<SquareGrid, SingleStream>.ScheduleParallel(mesh,
             //     meshData, default
             // ).Complete();
-            MeshJob<SquareGrid, MultiStream>.ScheduleParallel(mesh,
-                meshData, resolution ,default
-            ).Complete();
+            //MeshJob<SquareGrid, SingleStream>.ScheduleParallel(
+            //	mesh, meshData, resolution, default
+            //).Complete();
+            jobs[(int)meshType](mesh, meshData, resolution, default).Complete();
 
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
         }
