@@ -20,6 +20,8 @@ namespace Movement.Scripts
         [SerializeField, Min(0f)] float alignDelay = 5f;
 
         [SerializeField, Range(0f, 90f)] float alignSmoothRange = 45f;
+        
+        [SerializeField] LayerMask obstructionMask = -1;
 
         Vector3 focusPoint, previousFocusPoint;
 
@@ -27,9 +29,11 @@ namespace Movement.Scripts
 
         float lastManualRotationTime;
         Camera regularCamera;
-        
-        Vector3 CameraHalfExtends {
-            get {
+
+        Vector3 CameraHalfExtends
+        {
+            get
+            {
                 Vector3 halfExtends;
                 halfExtends.y =
                     regularCamera.nearClipPlane *
@@ -71,13 +75,24 @@ namespace Movement.Scripts
 
             Vector3 lookDirection = lookRotation * Vector3.forward;
             Vector3 lookPosition = focusPoint - lookDirection * distance;
-            
-            if (Physics.Raycast(
-                    focusPoint, -lookDirection, out RaycastHit hit, distance
-                )) {
-                lookPosition = focusPoint - lookDirection * hit.distance;
+
+
+            Vector3 rectOffset = lookDirection * regularCamera.nearClipPlane;
+            Vector3 rectPosition = lookPosition + rectOffset;
+            Vector3 castFrom = focus.position;
+            Vector3 castLine = rectPosition - castFrom;
+            float castDistance = castLine.magnitude;
+            Vector3 castDirection = castLine / castDistance;
+
+            if (Physics.BoxCast(
+                    castFrom, CameraHalfExtends, castDirection, out RaycastHit hit,
+                    lookRotation, castDistance, obstructionMask
+                ))
+            {
+                rectPosition = castFrom + castDirection * hit.distance;
+                lookPosition = rectPosition - rectOffset;
             }
-            
+
             transform.SetPositionAndRotation(lookPosition, lookRotation);
         }
 
@@ -158,7 +173,7 @@ namespace Movement.Scripts
 
             float headingAngle = GetAngle(movement / Mathf.Sqrt(movementDeltaSqr));
             float deltaAbs = Mathf.Abs(Mathf.DeltaAngle(orbitAngles.y, headingAngle));
-            float rotationChange = rotationSpeed *  Mathf.Min(Time.unscaledDeltaTime, movementDeltaSqr);
+            float rotationChange = rotationSpeed * Mathf.Min(Time.unscaledDeltaTime, movementDeltaSqr);
             if (deltaAbs < alignSmoothRange)
             {
                 rotationChange *= deltaAbs / alignSmoothRange;
@@ -179,6 +194,5 @@ namespace Movement.Scripts
             float angle = Mathf.Acos(direction.y) * Mathf.Rad2Deg;
             return direction.x < 0f ? 360f - angle : angle;
         }
-        
     }
 }
