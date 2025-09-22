@@ -21,6 +21,9 @@ namespace Movement.Scripts
 
         [SerializeField, Range(0f, 90f)] float alignSmoothRange = 45f;
         
+        [SerializeField, Min(0f)]
+        float upAlignmentSpeed = 360f;
+        
         [SerializeField] LayerMask obstructionMask = -1;
 
         Vector3 focusPoint, previousFocusPoint;
@@ -63,11 +66,7 @@ namespace Movement.Scripts
 
         void LateUpdate()
         {
-            gravityAlignment =
-                Quaternion.FromToRotation(
-                    gravityAlignment * Vector3.up, CustomGravity.GetUpAxis(focusPoint)
-                ) * gravityAlignment;
-            
+            UpdateGravityAlignment();
             UpdateFocusPoint();
 
             if (ManualRotation() || AutomaticRotation())
@@ -98,6 +97,24 @@ namespace Movement.Scripts
             }
 
             transform.SetPositionAndRotation(lookPosition, lookRotation);
+        }
+        
+        void UpdateGravityAlignment () {
+            Vector3 fromUp = gravityAlignment * Vector3.up;
+            Vector3 toUp = CustomGravity.GetUpAxis(focusPoint);
+            float dot = Mathf.Clamp(Vector3.Dot(fromUp, toUp), -1f, 1f);
+            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+            float maxAngle = upAlignmentSpeed * Time.deltaTime;
+            Quaternion newAlignment =
+                Quaternion.FromToRotation(fromUp, toUp) * gravityAlignment;
+            if (angle <= maxAngle) {
+                gravityAlignment = newAlignment;
+            }
+            else {
+                gravityAlignment = Quaternion.SlerpUnclamped(
+                    gravityAlignment, newAlignment, maxAngle / angle
+                );
+            }
         }
 
         void UpdateFocusPoint()
