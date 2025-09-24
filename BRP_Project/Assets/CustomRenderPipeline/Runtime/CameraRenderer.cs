@@ -3,9 +3,10 @@ using UnityEngine.Rendering;
 
 namespace CustomRenderPipeline.Runtime
 {
-    public class CameraRenderer
+    public partial class CameraRenderer
     {
         static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
+
         private const string bufferName = "Render Camera";
         
         ScriptableRenderContext context;
@@ -15,6 +16,7 @@ namespace CustomRenderPipeline.Runtime
         CommandBuffer buffer = new CommandBuffer {
             name = bufferName
         };
+
 
         public void Render (ScriptableRenderContext context, Camera camera) {
             this.context = context;
@@ -26,19 +28,30 @@ namespace CustomRenderPipeline.Runtime
             
             Setup();
             DrawVisibleGeometry();
+            DrawUnsupportedShaders();
             Submit();
         }
         
         void DrawVisibleGeometry () {
-            var sortingSettings = new SortingSettings(camera);
+            var sortingSettings = new SortingSettings(camera){
+                criteria = SortingCriteria.CommonOpaque
+            };
             var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings);
-            var filteringSettings = new FilteringSettings(RenderQueueRange.all);
+            var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
             context.DrawRenderers(
                 cullingResults, ref drawingSettings, ref filteringSettings
             );
             
             context.DrawSkybox(camera);
+            
+            sortingSettings.criteria = SortingCriteria.CommonTransparent;
+            drawingSettings.sortingSettings = sortingSettings;
+            filteringSettings.renderQueueRange = RenderQueueRange.transparent;
+
+            context.DrawRenderers(
+                cullingResults, ref drawingSettings, ref filteringSettings
+            );
         }
         
         void Setup () {
@@ -67,5 +80,6 @@ namespace CustomRenderPipeline.Runtime
             }
             return false;
         }
+        
     }
 }
