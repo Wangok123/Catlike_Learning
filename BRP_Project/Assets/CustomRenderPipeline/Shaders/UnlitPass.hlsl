@@ -7,8 +7,14 @@ CBUFFER_START(UnityPerMaterial)
     float4 _BaseColor;
 CBUFFER_END
 
-float4 UnlitPassVertex (float3 positionOS : POSITION) : SV_POSITION {
-    float3 positionWS = TransformObjectToWorld(positionOS.xyz);
+struct Attributes {
+	float3 positionOS : POSITION;
+    UNITY_VERTEX_INPUT_INSTANCE_ID
+};
+
+float4 UnlitPassVertex (Attributes input) : SV_POSITION {
+    UNITY_SETUP_INSTANCE_ID(input);
+    float3 positionWS = TransformObjectToWorld(input.positionOS);
     return TransformWorldToHClip(positionWS);
 }
 
