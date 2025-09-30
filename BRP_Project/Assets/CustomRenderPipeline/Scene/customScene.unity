@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
+  cutoff: 0.5
 --- !u!135 &42759301
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -503,6 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0, g: 1, b: 0.028357267, a: 1}
+  cutoff: 0.5
 --- !u!135 &122088310
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1102,6 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0.02441454, g: 0, b: 1, a: 1}
+  cutoff: 0.5
 --- !u!135 &515401848
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1300,6 +1303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0.02441454, g: 0, b: 1, a: 1}
+  cutoff: 0.5
 --- !u!135 &773129146
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1524,6 +1528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0, g: 1, b: 0.028357267, a: 1}
+  cutoff: 0.5
 --- !u!135 &945069962
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1643,6 +1648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 0.02441454, g: 0, b: 1, a: 1}
+  cutoff: 0.5
 --- !u!135 &1219972420
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1872,7 +1878,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae589c676a94c7ca7275c3ce7aed909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
+  baseColor: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 0.39607844}
+  cutoff: 0.275
 --- !u!1 &1383382501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,6 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
+  cutoff: 0.5
 --- !u!135 &1881402586
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2423,6 +2431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
+  cutoff: 0.5
 --- !u!135 &1991070178
 SphereCollider:
   m_ObjectHideFlags: 0
