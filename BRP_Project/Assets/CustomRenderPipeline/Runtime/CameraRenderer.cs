@@ -6,6 +6,7 @@ namespace CustomRenderPipeline.Runtime
     public partial class CameraRenderer
     {
         static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
+        static ShaderTagId litShaderTagId = new ShaderTagId("CustomLit");
 
         private const string bufferName = "Render Camera";
 
@@ -49,6 +50,8 @@ namespace CustomRenderPipeline.Runtime
                 enableDynamicBatching = useDynamicBatching,
                 enableInstancing = useGPUInstancing
             };
+            drawingSettings.SetShaderPassName(1, litShaderTagId);
+            
             var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
             context.DrawRenderers(
